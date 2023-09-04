@@ -68,11 +68,20 @@ cs('.dressInfo-size').forEach( (size, sizeIndex)=>{
 c('.dressInfo--addButton').addEventListener('click', ()=>{
     let size = c('.dressInfo-size.selected').getAttribute('data-key');
 
-    cart.push({
-        id:dressJson[modalKey].id,
-        size,
-        qt:modalQt
-    });
+    let identifier = dressJson[modalKey].id+'@'+size;
+
+    let key = cart.findIndex((item)=> item.identifier == identifier);
+
+    if (key = -1) {
+        cart[key].qt += modalQt;
+    } else {
+        cart.push({
+            identifier,
+            id:dressJson[modalKey].id,
+            size,
+            qt:modalQt
+        });
+    };
 
     closeModal();
 });
