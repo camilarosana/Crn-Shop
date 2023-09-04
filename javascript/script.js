@@ -67,9 +67,7 @@ cs('.dressInfo-size').forEach( (size, sizeIndex)=>{
 });
 c('.dressInfo--addButton').addEventListener('click', ()=>{
     let size = c('.dressInfo-size.selected').getAttribute('data-key');
-
     let identifier = dressJson[modalKey].id+'@'+size;
-
     let key = cart.findIndex((item)=> item.identifier == identifier);
 
     if (key = -1) {
@@ -83,5 +81,8 @@ c('.dressInfo--addButton').addEventListener('click', ()=>{
         });
     };
 
+    
     closeModal();
+    
 });
+
