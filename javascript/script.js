@@ -69,8 +69,7 @@ c('.dressInfo--addButton').addEventListener('click', ()=>{
     let size = c('.dressInfo-size.selected').getAttribute('data-key');
     let identifier = dressJson[modalKey].id+'@'+size;
     let key = cart.findIndex((item)=> item.identifier == identifier);
-
-    if (key = -1) {
+    if(key = -1) {
         cart[key].qt += modalQt;
     } else {
         cart.push({
@@ -81,8 +80,18 @@ c('.dressInfo--addButton').addEventListener('click', ()=>{
         });
     };
 
-    
-    closeModal();
-    
+    closeModal();  
+    updateCart();  
 });
+
+function updateCart() {
+    if(cart.length > 0) {
+        c('aside').classList.add('show');
+        for(let i in cart) {
+            let dressItem = dressJson.find((item)=>item.id == cart[i].id);
+        }
+    } else {
+        c('aside').classList.remove('show');
+    }
+}
 
