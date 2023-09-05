@@ -66,10 +66,11 @@ cs('.dressInfo-size').forEach( (size, sizeIndex)=>{
     });
 });
 c('.dressInfo--addButton').addEventListener('click', ()=>{
-    let size = c('.dressInfo-size.selected').getAttribute('data-key');
+    let size = parseInt(c('.dressInfo-size.selected').getAttribute('data-key'));
     let identifier = dressJson[modalKey].id+'@'+size;
-    let key = cart.findIndex((item)=> item.identifier == identifier);
-    if(key = -1) {
+    let key = cart.findIndex((item)=>item.identifier == identifier);
+
+    if(key > -1) {
         cart[key].qt += modalQt;
     } else {
         cart.push({
@@ -78,17 +79,17 @@ c('.dressInfo--addButton').addEventListener('click', ()=>{
             size,
             qt:modalQt
         });
-    };
+    }
 
-    closeModal();  
-    updateCart();  
+    closeModal();
+    updateCart();
 });
 
 function updateCart() {
     if(cart.length > 0) {
         c('aside').classList.add('show');
         for(let i in cart) {
-            let dressItem = dressJson.find((item)=>item.id == cart[i].id);
+            let dressItem = dressJson.find((item)=>item.id == cart[id].id);
         }
     } else {
         c('aside').classList.remove('show');
