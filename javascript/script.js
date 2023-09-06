@@ -82,15 +82,48 @@ c('.dressInfo--addButton').addEventListener('click', ()=>{
     }
 
     closeModal();
-    updateCart();
+    
 });
 
 function updateCart() {
     if(cart.length > 0) {
         c('aside').classList.add('show');
+        c('.cart').innerHTML = '';
+
+        let subtotal = 0;
+        let desconto = 0;
+        let total = 0;
+
         for(let i in cart) {
             let dressItem = dressJson.find((item)=>item.id == cart[id].id);
+            subtotal = dressItem.price * cart[i].qt;
+            let cartItem = c('.models .cart--item').cloneNode(true);
+
+            cartItem.querySelector('img').src = dressItem.img;
+            cartItem.querySelector('.cart--item--nome').innerHTML = dressItem.name;
+            cartItem.querySelector('.cart--item--qt').innerHTML = cart[id].qt;
+            cartItem.querySelector('.cart--item--qtmenos').addEventListener('click', ()=>{
+                if(cart[i].qt > 1) {
+                    cart[i].qt--;
+                } else {
+                    cart.splice(i, 1);
+                }
+                updateCart();
+            });
+            cartItem.querySelector('.cart--item--qtmais').addEventListener('click', ()=>{
+                cart[i].qt++;
+                updateCart();
+            });
+
+            c('.cart').append(cartItem);
         }
+        desconto = subtotal * 0.1;
+        total = subtotal - desconto;
+        
+        c('.cart--totalitem-subtotal span:last-child').innerHTML = `R$ ${subtotal.toFixed(2)}`;
+        c('.cart--totalitem-desconto span:last-child').innerHTML = `R$ ${desconto.toFixed(2)}`;
+        c('.cart--totalitem-total span:last-child').innerHTML = `R$ ${total.toFixed(2)}`;
+
     } else {
         c('aside').classList.remove('show');
     }
